@@ -10,8 +10,7 @@ ${BROWSER}   chrome
 ${HEADLESS}  false
 
 *** Keywords ***
-Configure Suite
-    Reset Counter
+Open And Configure Browser
     IF  $BROWSER == 'chrome'
         ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys
         Call Method  ${options}  add_argument  --incognito
@@ -28,5 +27,8 @@ Configure Suite
     Open Browser  browser=${BROWSER}  options=${options}
 
 Reset Counter
-    ${response}=    POST  ${HOME_URL}/reset
-    Should Be Equal As Strings    200  ${response.status_code}
+    ${resp}=    POST  ${HOME_URL}/reset  expected_status=200
+
+Set Counter ${value}
+    &{data}=    Create Dictionary  value=${value}
+    ${resp}=    POST  ${HOME_URL}/set  data=${data}  expected_status=200
