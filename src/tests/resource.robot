@@ -1,4 +1,5 @@
 *** Settings ***
+Library  RequestsLibrary
 Library  SeleniumLibrary
 
 *** Variables ***
@@ -9,6 +10,11 @@ ${BROWSER}   chrome
 ${HEADLESS}  false
 
 *** Keywords ***
-Open And Configure Browser
+Configure Suite
+    Reset Counter
     Set Selenium Speed  ${DELAY}
     Open Browser  browser=${BROWSER}
+
+Reset Counter
+    ${response}=    POST  ${HOME_URL}/reset
+    Should Be Equal As Strings    200  ${response.status_code}

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  resource.robot
-Suite Setup  Open And Configure Browser
+Suite Setup  Configure Suite
 Suite Teardown  Close Browser
 
 *** Test Cases ***
